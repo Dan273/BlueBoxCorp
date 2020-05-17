@@ -14,10 +14,9 @@ public:
 	Vector2* scale;
 
 	void Update();
-	void Render(int camX, int camY);
+	void Render();
 
 private:
-	LTexture texture;
 	SDL_Renderer* ren;
 	SDL_Texture* objTexture;
 	SDL_Rect srcRect, destRect;

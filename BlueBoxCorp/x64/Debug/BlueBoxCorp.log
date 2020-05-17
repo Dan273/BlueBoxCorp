@@ -1,0 +1,31 @@
+﻿Game.obj : error LNK2019: unresolved external symbol SDL_GetError referenced in function "public: void __cdecl Game::init(char const *,int,int,int,int,bool)" (?init@Game@@QEAAXPEBDHHHH_N@Z)
+LTexture.obj : error LNK2001: unresolved external symbol SDL_GetError
+Game.obj : error LNK2019: unresolved external symbol SDL_CreateWindow referenced in function "public: void __cdecl Game::init(char const *,int,int,int,int,bool)" (?init@Game@@QEAAXPEBDHHHH_N@Z)
+Game.obj : error LNK2019: unresolved external symbol SDL_DestroyWindow referenced in function "public: void __cdecl Game::Clean(void)" (?Clean@Game@@QEAAXXZ)
+Game.obj : error LNK2019: unresolved external symbol SDL_PollEvent referenced in function "public: void __cdecl Game::HandleEvents(void)" (?HandleEvents@Game@@QEAAXXZ)
+Game.obj : error LNK2019: unresolved external symbol SDL_CreateRenderer referenced in function "public: void __cdecl Game::init(char const *,int,int,int,int,bool)" (?init@Game@@QEAAXPEBDHHHH_N@Z)
+Game.obj : error LNK2019: unresolved external symbol SDL_SetRenderDrawColor referenced in function "public: void __cdecl Game::init(char const *,int,int,int,int,bool)" (?init@Game@@QEAAXPEBDHHHH_N@Z)
+Game.obj : error LNK2019: unresolved external symbol SDL_RenderClear referenced in function "public: void __cdecl Game::Render(void)" (?Render@Game@@QEAAXXZ)
+Game.obj : error LNK2019: unresolved external symbol SDL_RenderPresent referenced in function "public: void __cdecl Game::Render(void)" (?Render@Game@@QEAAXXZ)
+Game.obj : error LNK2019: unresolved external symbol SDL_DestroyRenderer referenced in function "public: void __cdecl Game::Clean(void)" (?Clean@Game@@QEAAXXZ)
+Game.obj : error LNK2019: unresolved external symbol SDL_Init referenced in function "public: void __cdecl Game::init(char const *,int,int,int,int,bool)" (?init@Game@@QEAAXPEBDHHHH_N@Z)
+Game.obj : error LNK2019: unresolved external symbol SDL_Quit referenced in function "public: void __cdecl Game::Clean(void)" (?Clean@Game@@QEAAXXZ)
+LTexture.obj : error LNK2019: unresolved external symbol SDL_MapRGB referenced in function "public: bool __cdecl LTexture::LoadFromFile(char const *)" (?LoadFromFile@LTexture@@QEAA_NPEBD@Z)
+LTexture.obj : error LNK2019: unresolved external symbol SDL_FreeSurface referenced in function "public: bool __cdecl LTexture::LoadFromFile(char const *)" (?LoadFromFile@LTexture@@QEAA_NPEBD@Z)
+LTexture.obj : error LNK2019: unresolved external symbol SDL_SetColorKey referenced in function "public: bool __cdecl LTexture::LoadFromFile(char const *)" (?LoadFromFile@LTexture@@QEAA_NPEBD@Z)
+LTexture.obj : error LNK2019: unresolved external symbol SDL_CreateTextureFromSurface referenced in function "public: bool __cdecl LTexture::LoadFromFile(char const *)" (?LoadFromFile@LTexture@@QEAA_NPEBD@Z)
+LTexture.obj : error LNK2019: unresolved external symbol SDL_SetTextureColorMod referenced in function "public: void __cdecl LTexture::SetColor(unsigned char,unsigned char,unsigned char)" (?SetColor@LTexture@@QEAAXEEE@Z)
+LTexture.obj : error LNK2019: unresolved external symbol SDL_SetTextureAlphaMod referenced in function "public: void __cdecl LTexture::SetAlpha(unsigned char)" (?SetAlpha@LTexture@@QEAAXE@Z)
+LTexture.obj : error LNK2019: unresolved external symbol SDL_SetTextureBlendMode referenced in function "public: void __cdecl LTexture::SetBlendMode(enum SDL_BlendMode)" (?SetBlendMode@LTexture@@QEAAXW4SDL_BlendMode@@@Z)
+LTexture.obj : error LNK2019: unresolved external symbol SDL_RenderCopyEx referenced in function "public: void __cdecl LTexture::Render(int,int,struct SDL_Rect *,double,struct SDL_Point *,enum SDL_RendererFlip)" (?Render@LTexture@@QEAAXHHPEAUSDL_Rect@@NPEAUSDL_Point@@W4SDL_RendererFlip@@@Z)
+LTexture.obj : error LNK2019: unresolved external symbol SDL_DestroyTexture referenced in function "public: void __cdecl LTexture::Free(void)" (?Free@LTexture@@QEAAXXZ)
+LTexture.obj : error LNK2019: unresolved external symbol IMG_Load referenced in function "public: bool __cdecl LTexture::LoadFromFile(char const *)" (?LoadFromFile@LTexture@@QEAA_NPEBD@Z)
+main.obj : error LNK2019: unresolved external symbol SDL_GetTicks referenced in function SDL_main
+Time.obj : error LNK2001: unresolved external symbol SDL_GetTicks
+main.obj : error LNK2019: unresolved external symbol SDL_Delay referenced in function SDL_main
+Transform.obj : error LNK2019: unresolved external symbol SDL_RenderCopy referenced in function "public: void __cdecl Transform::Render(int,int)" (?Render@Transform@@QEAAXHH@Z)
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+C:\Development\SDL2\lib\x86\SDL2.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Development\SDL2\lib\x86\SDL2_image.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Development\SDL2\lib\x86\SDL2_ttf.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\x64\Debug\BlueBoxCorp.exe : fatal error LNK1120: 25 unresolved externals

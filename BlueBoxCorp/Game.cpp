@@ -3,15 +3,10 @@
 #include "LTexture.h"
 
 int WIDTH, HEIGHT;
-int levelWIDTH = 1024, levelHEIGHT = 720;
 
-SDL_Rect camera = { 0, 0, WIDTH, HEIGHT };
-
-LTexture bgTexture;
-
-GameObject* playerObject;
-GameObject* ground;
+GameObject* player;
 GameObject* crate;
+GameObject* bulletHolder;
 
 Time time;
 
@@ -52,26 +47,19 @@ void Game::init(const char *title, int xPos, int yPos, int width, int height, bo
 		if (renderer)
 		{
 			//Currently: White
-			SDL_SetRenderDrawColor(renderer, 25, 25, 25, 255);
+			SDL_SetRenderDrawColor(renderer, 0, 0, 25, 255);
 			std::cout << "Renderer Created!" << std::endl;
 		}
 		isRunning = true;
 	}
 
-	bgTexture.SetColor(255, 255, 255);
-	bgTexture.LoadTexture("Assets/Background.png", renderer);
-
 	//Spawn Player
-	Transform* playerTransform = new Transform("Assets/Sprites/Player_Front.png", renderer, new Vector2(width / 2, 0), new Vector2(64, 128));
-	playerObject = new GameObject("Player", playerTransform, true);
-
-	//Spawn Ground
-	Transform* groundTransform = new Transform("Assets/Sprites/Ground.png", renderer, new Vector2(0, height - 128), new Vector2(width*2, 128));
-	ground = new GameObject("Ground", groundTransform, true);
+	Transform* playerTransform = new Transform("Assets/Sprites/Player.png", renderer, new Vector2(width / 2, height/2), new Vector2(64, 128));
+	player = new GameObject("Player", playerTransform);
 
 	//Spawn Crate
-	Transform* crateTransform = new Transform("Assets/Sprites/crate.png", renderer, new Vector2(width/2, height - groundTransform->scale->y*1.5), new Vector2(64, 64));
-	crate = new GameObject("Box", crateTransform, true);
+	Transform* crateTransform = new Transform("Assets/Sprites/crate.png", renderer, new Vector2(width/2, 0), new Vector2(64, 64));
+	crate = new GameObject("Box", crateTransform);
 }
 
 int xVel = 0;
@@ -82,8 +70,6 @@ void Game::HandleEvents()
 	//Handle the player movement
 	int speed = 5;
 	int maxSpeed = 5;
-	int jumpHeight = 50;
-	int gravity = -9;
 
 	SDL_Event event;
 	SDL_PollEvent(&event);
@@ -97,7 +83,6 @@ void Game::HandleEvents()
 	if (event.type == SDL_KEYDOWN)
 	{
 		//Check the SDLKey values and move change the coords
-
 		switch (event.key.keysym.sym) {
 		case SDLK_LEFT:
 			if (xVel > -maxSpeed)
@@ -108,7 +93,6 @@ void Game::HandleEvents()
 				xVel += speed;
 			break;
 		case SDLK_UP:
-			canJump = false;
 			yVel -= speed;
 			break;
 		case SDLK_DOWN:
@@ -116,6 +100,18 @@ void Game::HandleEvents()
 			break;
 		default:
 			break;
+		}
+
+		//Check if we press the shoot key
+		if (event.key.keysym.scancode == SDL_SCANCODE_LCTRL) 
+		{
+			//Temporary - Move into its own function
+			//Set bullet transform
+			Transform* bullet = new Transform("Assets/Sprites/Laser.png", renderer,
+												new Vector2(player->transform->position->x + player->transform->scale->x/2, 
+															player->transform->position->y),
+												new Vector2(8, 16));
+			bulletHolder = new GameObject("Bullet", bullet);
 		}
 	}
 	if(event.type == SDL_KEYUP)
@@ -142,63 +138,43 @@ void Game::HandleEvents()
 		}
 	}
 
-	playerObject->transform->position->x += xVel;
-	playerObject->transform->position->y += yVel;
+	//Move player based on the velocity
+	player->transform->position->x += xVel;
+	player->transform->position->y += yVel;
 
-	camera.x++;
-
-	//Gravity pulls the player to the ground
-	//playerObject->transform->position->y -= gravity;
+	//If we have a bullet then move the bullet based on its force
+	if(bulletHolder != nullptr && bulletHolder->transform != nullptr)
+		bulletHolder->transform->position->y--;
 
 	//Collide with things
-	if (playerObject->transform->position->x < 0 || playerObject->transform->position->x + playerObject->transform->scale->x > WIDTH ||
-			Collider::CheckCollision(playerObject->transform, ground->transform) || Collider::CheckCollision(playerObject->transform, crate->transform)) {
-		playerObject->transform->position->x -= xVel;
+	if (player->transform->position->x < 0 || player->transform->position->x + player->transform->scale->x > WIDTH ||
+			Collider::CheckCollision(player->transform, crate->transform)) {
+		player->transform->position->x -= xVel;
 	}
-	if (playerObject->transform->position->y < 0 || playerObject->transform->position->y + playerObject->transform->scale->y > HEIGHT ||
-			Collider::CheckCollision(playerObject->transform, ground->transform) || Collider::CheckCollision(playerObject->transform, crate->transform)) {
-		playerObject->transform->position->y -= yVel;
+	if (player->transform->position->y < 0 || player->transform->position->y + player->transform->scale->y > HEIGHT ||
+			Collider::CheckCollision(player->transform, crate->transform)) {
+		player->transform->position->y -= yVel;
 	}
 }
 
 void Game::Update()
 {
-	playerObject->transform->Update();
-	ground->transform->Update();
+	player->transform->Update();
 	crate->transform->Update();
+	if(bulletHolder != nullptr && bulletHolder->transform != nullptr)
+		bulletHolder->transform->Update();
 }
 
 void Game::Render()
 {	
-	//Center the camera over the dot
-	camera.x = (playerObject->transform->position->x + playerObject->transform->scale->x / 2) - WIDTH / 2;
-	camera.y = (playerObject->transform->position->y + playerObject->transform->scale->y / 2) - HEIGHT / 2;
-
-	//Keep the camera in bounds
-	if (camera.x < 0)
-	{
-		camera.x = 0;
-	}
-	if (camera.y < 0)
-	{
-		camera.y = 0;
-	}
-	if (camera.x > levelWIDTH - camera.w)
-	{
-		camera.x = levelWIDTH - camera.w;
-	}
-	if (camera.y > levelHEIGHT - camera.h)
-	{
-		camera.y = levelHEIGHT - camera.h;
-	}
-
 	SDL_RenderClear(renderer);
 
-	bgTexture.Render(0, 0, &camera);
 
-	playerObject->transform->Render(camera.x, camera.y);
-	ground->transform->Render(camera.x, camera.y);
-	crate->transform->Render(camera.x, camera.y);
+	player->transform->Render();
+	crate->transform->Render();
+
+	if (bulletHolder != nullptr && bulletHolder->transform != nullptr)
+		bulletHolder->transform->Render();
 
 	SDL_RenderPresent(renderer);
 }

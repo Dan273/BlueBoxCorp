@@ -4,7 +4,6 @@
 Transform::Transform(const char* text, SDL_Renderer* ren, Vector2* pos, Vector2* s)
 {
 	renderer = ren;
-
 	objTexture = LTexture::LoadTexture(text, ren);
 
 	position = pos;
@@ -24,8 +23,7 @@ void Transform::Update()
 	destRect.h = srcRect.h;
 }
 
-void Transform::Render(int camX, int camY)
+void Transform::Render()
 {
-	texture.Render(position->x - camX, position->y - camY);
 	SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
 }

@@ -1,8 +1,7 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const char* n, Transform* t, bool gravity)
+GameObject::GameObject(const char* n, Transform* t)
 {
 	name = n;
 	transform = t;
-	useGravity = gravity;
 }

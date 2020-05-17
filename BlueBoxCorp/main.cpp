@@ -12,7 +12,8 @@ int main(int argc, char *argv[])
 
 	game = new Game();
 
-	game->init("BlueBox", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 500, false);
+	//Set the window elements
+	game->init("BlueBox", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 480, 640, false);
 
 	while (game->Running())
 	{

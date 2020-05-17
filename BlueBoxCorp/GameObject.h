@@ -5,13 +5,12 @@
 class GameObject
 {
 public:
-	GameObject(const char* n, Transform* t, bool gravity);
+	GameObject(const char* n, Transform* t);
 	~GameObject();
 
 	Transform* transform;
 
 private:
 	const char* name;
-	bool useGravity;
 };
 
