@@ -1,0 +1,6 @@
+﻿  Game.cpp
+C:\Users\Daniel\OneDrive\Projects\BlueBoxCorp\BlueBoxCorp\Game.h(9,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Daniel\OneDrive\Projects\BlueBoxCorp\BlueBoxCorp\Time.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Daniel\OneDrive\Projects\BlueBoxCorp\BlueBoxCorp\Collider.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Daniel\OneDrive\Projects\BlueBoxCorp\BlueBoxCorp\Game.cpp(73,110): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  BlueBoxCorp.vcxproj -> C:\Users\Daniel\OneDrive\Projects\BlueBoxCorp\Debug\BlueBoxCorp.exe
