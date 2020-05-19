@@ -1,14 +1,12 @@
 #include "Game.h"
-#include "Collider.h"
-#include "LTexture.h"
 
 int WIDTH, HEIGHT;
 
-GameObject* player;
-GameObject* crate;
-GameObject* bulletHolder;
+PlayerManager* player;
 
-Time time;
+Transform* background;
+
+const Uint8* keystates = SDL_GetKeyboardState(NULL);
 
 Game::Game()
 {}
@@ -18,9 +16,6 @@ Game::~Game()
 
 void Game::init(const char *title, int xPos, int yPos, int width, int height, bool fullscreen)
 {
-	//Start the timer
-	time.Start();
-
 	WIDTH = width;
 	HEIGHT = height;
 
@@ -54,12 +49,11 @@ void Game::init(const char *title, int xPos, int yPos, int width, int height, bo
 	}
 
 	//Spawn Player
-	Transform* playerTransform = new Transform("Assets/Sprites/Player.png", renderer, new Vector2(width / 2, height/2), new Vector2(64, 128));
-	player = new GameObject("Player", playerTransform);
+	Transform* playerTransform = new Transform("Assets/Sprites/Player.png", renderer, new Vector2(width / 2, height/1.5f), new Vector2(64, 128));
+	player = new PlayerManager(playerTransform, 250, 100, 0, 0, 0);
 
-	//Spawn Crate
-	Transform* crateTransform = new Transform("Assets/Sprites/crate.png", renderer, new Vector2(width/2, 0), new Vector2(64, 64));
-	crate = new GameObject("Box", crateTransform);
+	//Spawn Background
+	background = new Transform("Assets/Background.png", renderer, new Vector2(0, 0), new Vector2(width, height));
 }
 
 int xVel = 0;
@@ -68,8 +62,8 @@ bool canJump = false;
 void Game::HandleEvents()
 {
 	//Handle the player movement
-	int speed = 5;
-	int maxSpeed = 5;
+	int speed = 4;
+	int maxSpeed = 4;
 
 	SDL_Event event;
 	SDL_PollEvent(&event);
@@ -85,33 +79,23 @@ void Game::HandleEvents()
 		//Check the SDLKey values and move change the coords
 		switch (event.key.keysym.sym) {
 		case SDLK_LEFT:
-			if (xVel > -maxSpeed)
+			if (xVel >= -maxSpeed)
 				xVel -= speed;
 			break;
 		case SDLK_RIGHT:
-			if (xVel < maxSpeed)
+			if (xVel <= maxSpeed)
 				xVel += speed;
 			break;
 		case SDLK_UP:
-			yVel -= speed;
+			if(yVel >= -maxSpeed)
+				yVel -= speed;
 			break;
 		case SDLK_DOWN:
-			yVel += speed;
+			if(yVel <= maxSpeed)
+				yVel += speed;
 			break;
 		default:
 			break;
-		}
-
-		//Check if we press the shoot key
-		if (event.key.keysym.scancode == SDL_SCANCODE_LCTRL) 
-		{
-			//Temporary - Move into its own function
-			//Set bullet transform
-			Transform* bullet = new Transform("Assets/Sprites/Laser.png", renderer,
-												new Vector2(player->transform->position->x + player->transform->scale->x/2, 
-															player->transform->position->y),
-												new Vector2(8, 16));
-			bulletHolder = new GameObject("Bullet", bullet);
 		}
 	}
 	if(event.type == SDL_KEYUP)
@@ -136,46 +120,61 @@ void Game::HandleEvents()
 		default:
 			break;
 		}
+
+		if (event.key.keysym.scancode == SDL_SCANCODE_LCTRL)
+		{
+			hasShot = false;
+		}
+	}
+
+	//Check if we press the shoot key
+	if (keystates[SDL_SCANCODE_LCTRL] && !hasShot)
+	{
+		hasShot = true;
+		//Shoot the basic projectile via the function created
+		Shooting().Shoot(Shooting().projectileTypes[0], 1, renderer,
+			new Vector2(player->transform->position->x + player->transform->scale->x / 2 -
+				Shooting().projectileTypes[0]->scale->x / 2,
+				player->transform->position->y));
+	}
+	
+	//Temp - Spawn enemy when we press space
+	if (keystates[SDL_SCANCODE_SPACE])
+	{
+		//Spawn enemy
+		EnemySpawner().SpawnEnemy(EnemySpawner().enemyTypes[0], new Vector2(rand() % (WIDTH - 0 + 1) + 0, 0), renderer);
 	}
 
 	//Move player based on the velocity
 	player->transform->position->x += xVel;
 	player->transform->position->y += yVel;
 
-	//If we have a bullet then move the bullet based on its force
-	if(bulletHolder != nullptr && bulletHolder->transform != nullptr)
-		bulletHolder->transform->position->y--;
-
 	//Collide with things
-	if (player->transform->position->x < 0 || player->transform->position->x + player->transform->scale->x > WIDTH ||
-			Collider::CheckCollision(player->transform, crate->transform)) {
+	if (player->transform->position->x < 0 || player->transform->position->x + player->transform->scale->x > WIDTH) {
 		player->transform->position->x -= xVel;
 	}
-	if (player->transform->position->y < 0 || player->transform->position->y + player->transform->scale->y > HEIGHT ||
-			Collider::CheckCollision(player->transform, crate->transform)) {
+	if (player->transform->position->y < 0 || player->transform->position->y + player->transform->scale->y > HEIGHT) {
 		player->transform->position->y -= yVel;
 	}
 }
 
 void Game::Update()
 {
+	background->Update();
+	EnemySpawner().Update(HEIGHT);
 	player->transform->Update();
-	crate->transform->Update();
-	if(bulletHolder != nullptr && bulletHolder->transform != nullptr)
-		bulletHolder->transform->Update();
+	Shooting().Update(WIDTH, HEIGHT);
 }
 
 void Game::Render()
 {	
 	SDL_RenderClear(renderer);
 
-
+	background->Render();
+	EnemySpawner().Render();
 	player->transform->Render();
-	crate->transform->Render();
-
-	if (bulletHolder != nullptr && bulletHolder->transform != nullptr)
-		bulletHolder->transform->Render();
-
+	Shooting().Render();
+	
 	SDL_RenderPresent(renderer);
 }
 

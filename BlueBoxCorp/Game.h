@@ -3,10 +3,16 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
+#include "Collider.h"
 #include "Transform.h"
 #include "Vector2.h"
-#include "GameObject.h"
-#include "Time.h";
+#include "Time.h"
+#include "LTexture.h"
+#include "Shooting.h"
+#include "EnemySpawner.h"
+#include "PlayerManager.h"
+
+extern PlayerManager* player;
 
 class Game
 {

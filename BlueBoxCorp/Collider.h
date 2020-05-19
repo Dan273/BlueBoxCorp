@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Game.h";
+#include "Vector2.h"
+#include "Transform.h"
 
 class Collider
 {

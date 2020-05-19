@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Vector2.h"
-#include "SDL_image.h"
+#include "SDL.h"
 #include "LTexture.h"
 
 class Transform
@@ -15,6 +15,8 @@ public:
 
 	void Update();
 	void Render();
+
+	void Destroy();
 
 private:
 	SDL_Renderer* ren;

@@ -1,5 +1,5 @@
 #include "Transform.h"
-#include "LTexture.h"
+#include <iostream>
 
 Transform::Transform(const char* text, SDL_Renderer* ren, Vector2* pos, Vector2* s)
 {
@@ -26,4 +26,10 @@ void Transform::Update()
 void Transform::Render()
 {
 	SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
+}
+
+void Transform::Destroy()
+{
+	SDL_DestroyTexture(objTexture);
+	std::cout << "Transform Destroyed!" << std::endl;
 }

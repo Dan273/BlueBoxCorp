@@ -1,4 +1,3 @@
-﻿  main.cpp
-C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Game.h(9,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Time.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+﻿  Game.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Game.cpp(52,113): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   BlueBoxCorp.vcxproj -> C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\Debug\BlueBoxCorp.exe

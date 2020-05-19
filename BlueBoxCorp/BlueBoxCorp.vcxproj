@@ -154,20 +154,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Shooting.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="LTexture.h" />
-    <ClInclude Include="Time.h" />
+    <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Shooting.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
