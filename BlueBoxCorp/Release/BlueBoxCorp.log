@@ -1,0 +1,22 @@
+﻿  Collider.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Transform.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Enemy.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Transform.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  EnemySpawner.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Transform.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Game.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Game.h(3,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  LTexture.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\LTexture.h(3,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  main.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Game.h(3,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  PlayerManager.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Transform.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Projectile.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Transform.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Shooting.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Shooting.h(3,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Text.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Text.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Transform.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Transform.h(4,10): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory

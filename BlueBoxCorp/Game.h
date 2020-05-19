@@ -2,7 +2,9 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
+#include "Initial.h"
 #include "Collider.h"
 #include "Transform.h"
 #include "Vector2.h"
@@ -11,8 +13,10 @@
 #include "Shooting.h"
 #include "EnemySpawner.h"
 #include "PlayerManager.h"
+#include "Text.h"
 
 extern PlayerManager* player;
+extern bool restart;
 
 class Game
 {
