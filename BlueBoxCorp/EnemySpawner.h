@@ -15,16 +15,16 @@ class EnemySpawner
 public:
 	//Array of enemy types
 	Enemy* enemyTypes[1] = {
-		new Enemy(100, 1, 25, "Assets/Sprites/Crate.png", new Vector2(64, 64), NULL)
+		new Enemy(100, 2, 25, "Assets/Sprites/Goop.png", new Vector2(64, 64), NULL)
 	};
 
 	void SpawnEnemy(Enemy* enemy, Vector2* pos, SDL_Renderer* ren);
+	void SpawnEnemies(SDL_Renderer* ren, int width);
 
-	void Update(int h);
+	void Update(int h, SDL_Renderer* ren, int width);
 	void Render();
 
 private:
-
 
 };
 

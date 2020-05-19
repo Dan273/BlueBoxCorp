@@ -159,13 +159,6 @@ void Game::HandleEvents()
 					player->transform->position->y));
 		}
 
-		//Temp - Spawn enemy when we press space
-		if (keystates[SDL_SCANCODE_SPACE])
-		{
-			//Spawn enemy
-			EnemySpawner().SpawnEnemy(EnemySpawner().enemyTypes[0], new Vector2(rand() % (WIDTH - 0 + 1) + 0, 0), renderer);
-		}
-
 		//Move player based on the velocity
 		player->transform->position->x += xVel;
 		player->transform->position->y += yVel;
@@ -176,6 +169,11 @@ void Game::HandleEvents()
 		}
 		if (player->transform->position->y < 0 || player->transform->position->y + player->transform->scale->y > HEIGHT) {
 			player->transform->position->y -= yVel;
+		}
+		else
+		{
+			if(!keystates[SDL_SCANCODE_UP])
+				player->transform->position->y += 1;
 		}
 	}
 	else
@@ -214,9 +212,12 @@ void Game::Update()
 	{
 		//Game Elements
 		background->Update();
-		EnemySpawner().Update(HEIGHT);
-		player->transform->Update();
-		Shooting().Update(WIDTH, HEIGHT);
+		if (gameStarted)
+		{
+			EnemySpawner().Update(HEIGHT, renderer, WIDTH);
+			player->transform->Update();
+			Shooting().Update(WIDTH, HEIGHT);
+		}
 
 		//UI Elements
 		scoreText = new Text("Score: " + std::to_string(player->score), "Assets/arial.ttf", 25, { 255, 255, 255 }, renderer);
