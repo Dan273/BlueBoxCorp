@@ -23,6 +23,7 @@ public:
 
 	void Update(int h, SDL_Renderer* ren, int width);
 	void Render();
+	void Clean();
 
 private:
 

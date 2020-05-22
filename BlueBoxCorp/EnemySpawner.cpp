@@ -4,7 +4,7 @@
 
 int enemyCount = 0;
 std::vector<Enemy*> enemies;
-int spawnTimer = 10 + (rand() % 60);;
+int spawnTimer = 500;
 
 void EnemySpawner::SpawnEnemy(Enemy* enemy, Vector2* pos, SDL_Renderer* ren)
 {
@@ -29,7 +29,7 @@ void EnemySpawner::SpawnEnemies(SDL_Renderer* ren, int width)
 	if (--spawnTimer <= 0)
 	{
 		SpawnEnemy(enemyTypes[0], new Vector2(rand() % (width - enemyTypes[0]->scale->x) + 0, -100), ren);
-		spawnTimer = 30 + (rand() % 60);
+		spawnTimer = 60 + (rand() % 120);
 	}
 }
 
@@ -79,4 +79,14 @@ void EnemySpawner::Render()
 			Enemy* enemy = enemies.at(i);
 			enemy->transform->Render();
 		}
+}
+
+void EnemySpawner::Clean()
+{
+	for (int i = 0; i < enemyCount; i++)
+	{
+		delete enemies[i];
+		enemies.clear();
+		enemyCount = 0;
+	}
 }

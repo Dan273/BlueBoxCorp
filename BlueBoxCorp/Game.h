@@ -30,6 +30,7 @@ public:
 	void Update();
 	void Render();
 	void Clean();
+	void Delete();
 	
 	bool Running() { return isRunning; }
 

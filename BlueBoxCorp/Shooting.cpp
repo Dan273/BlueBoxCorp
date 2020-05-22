@@ -7,31 +7,24 @@
 std::vector<Projectile*> projectiles;
 int pCount;
 
-int delay = 0;
-
 bool hasShot = false;
 
 void Shooting::Shoot(Projectile* p, int c, SDL_Renderer* ren, Vector2* pos)
 {
-	if (--delay <= 0)
-	{
-		//Spawn the projectile Transform
-		Transform* newT = new Transform(p->texture, ren, pos, p->scale);
+	//Spawn the projectile Transform
+	Transform* newT = new Transform(p->texture, ren, pos, p->scale);
 
-		//Spawn Projectile
-		Projectile* newProj = new Projectile(NULL, p->speed, p->damage, NULL, newT);
+	//Spawn Projectile
+	Projectile* newProj = new Projectile(NULL, p->speed, p->damage, NULL, newT);
 
-		//Add the projectile to the list of projectiles
-		projectiles.push_back(newProj);
+	//Add the projectile to the list of projectiles
+	projectiles.push_back(newProj);
 
-		//Add one to the counter
-		pCount++;
+	//Add one to the counter
+	pCount++;
 
-		//We have shot a projectile!
-		std::cout << "Projectile Shot!" << std::endl;
-
-		delay = 3;
-	}
+	//We have shot a projectile!
+	std::cout << "Projectile Shot!" << std::endl;
 }
 
 bool flag = false;;
@@ -104,4 +97,14 @@ void Shooting::Render()
 			Projectile* p = projectiles.at(i);
 			p->transform->Render();
 		}
+}
+
+void Shooting::Clean()
+{
+	for (int i = 0; i < pCount; i++)
+	{
+		delete projectiles[i];
+		projectiles.clear();
+		pCount = 0;
+	}
 }

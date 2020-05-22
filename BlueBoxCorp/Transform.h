@@ -8,7 +8,6 @@ class Transform
 {
 public:
 	Transform(const char* text, SDL_Renderer* ren, Vector2* pos, Vector2* s);
-	~Transform();
 
 	Vector2* position;
 	Vector2* scale;

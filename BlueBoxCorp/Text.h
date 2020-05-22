@@ -7,9 +7,10 @@
 class Text
 {
 public:
-	Text(const std::string &t, const char* fontName, int fontSize, SDL_Color c, SDL_Renderer* ren);
+	Text(const std::string &t, const char* fontName, int fontSize, SDL_Color c, SDL_Renderer* ren, int w);
+	~Text();
 
-	SDL_Texture* LoadFont(const std::string &t, const char* fontName, int fontSize, SDL_Color c, SDL_Renderer* ren);
+	static SDL_Texture* LoadFont(const std::string &t, const char* fontName, int fontSize, SDL_Color c, SDL_Renderer* ren, int w);
 
 	void Render(int x, int y, SDL_Renderer* ren) const;
 

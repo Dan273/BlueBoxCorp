@@ -6,7 +6,6 @@ int WIDTH, HEIGHT;
 bool gameStarted;
 bool gameOver;
 bool restart;
-Text* gameText;
 
 PlayerManager* player;
 
@@ -14,9 +13,15 @@ Transform* background;
 
 const Uint8* keystates = SDL_GetKeyboardState(NULL);
 
+Text* gameText;
 Text* scoreText;
 Text* healthText;
 Text* baseText;
+
+int gameW;
+int delay = 0;
+
+const char* font = "Assets/ROBOTECH.ttf";
 
 Game::Game()
 {}
@@ -31,6 +36,8 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 
 	WIDTH = width;
 	HEIGHT = height;
+
+	gameW = width;
 
 	int flags = 0;
 	if (fullscreen)
@@ -70,8 +77,6 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 	//Spawn Background
 	background = new Transform("Assets/Background.png", renderer, new Vector2(0, 0), new Vector2(width, height));
 
-	//Create Game UI
-	gameText = new Text("Press 'space' to start...", "Assets/arial.ttf", 25, { 255, 255, 255 }, renderer);
 }
 
 int xVel = 0;
@@ -149,14 +154,18 @@ void Game::HandleEvents()
 		}
 
 		//Check if we press the shoot key
-		if (keystates[SDL_SCANCODE_LCTRL] && !hasShot)
+		if (--delay <= 0)
 		{
-			hasShot = true;
-			//Shoot the basic projectile via the function created
-			Shooting().Shoot(Shooting().projectileTypes[0], 1, renderer,
-				new Vector2(player->transform->position->x + player->transform->scale->x / 2 -
-					Shooting().projectileTypes[0]->scale->x / 2,
-					player->transform->position->y));
+			if (keystates[SDL_SCANCODE_LCTRL])
+			{
+				hasShot = true;
+				//Shoot the basic projectile via the function created
+				Shooting().Shoot(Shooting().projectileTypes[0], 1, renderer,
+					new Vector2(player->transform->position->x + player->transform->scale->x / 2 -
+						Shooting().projectileTypes[0]->scale->x / 2,
+						player->transform->position->y));
+				delay = 40;
+			}
 		}
 
 		//Move player based on the velocity
@@ -181,19 +190,18 @@ void Game::HandleEvents()
 		//If we press space and the game hasnt started, then start
 		if (keystates[SDL_SCANCODE_SPACE])
 		{
-			gameText = new Text("", "Assets/arial.ttf", 25, { 255, 255, 255 }, renderer);
+			delete gameText;
 			gameStarted = true;
 		}
+	}
+		//If the player wants to restart, they can do so with a key input
+	if (keystates[SDL_SCANCODE_R])
+	{
+		Initial().StartGame();
 	}
 
 	if (gameOver) 
 	{
-		//If the player wants to restart, they can do so with a key input
-		if (keystates[SDL_SCANCODE_R])
-		{
-			Initial().StartGame();
-		}
-
 		//Player can quit with a key input
 		if (keystates[SDL_SCANCODE_ESCAPE])
 		{
@@ -206,7 +214,8 @@ void Game::Update()
 {
 	if (gameOver)
 	{
-		gameText = new Text("Game Over! \n Score: " + std::to_string(player->score), "Assets/arial.ttf", 25, { 255, 255, 255 }, renderer);
+		gameText = new Text("Game Over!\nScore: " + std::to_string(player->score) + " \nPress 'r' to restart!", 
+								font, 32, { 255, 50, 50 }, renderer, gameW);
 	}
 	else
 	{
@@ -220,9 +229,11 @@ void Game::Update()
 		}
 
 		//UI Elements
-		scoreText = new Text("Score: " + std::to_string(player->score), "Assets/arial.ttf", 25, { 255, 255, 255 }, renderer);
-		healthText = new Text("Health: " + std::to_string(player->health), "Assets/arial.ttf", 25, { 255, 255, 255 }, renderer);
-		baseText = new Text("Base Health: " + std::to_string(player->baseHealth), "Assets/arial.ttf", 25, { 255, 255, 255 }, renderer);
+		if (!gameStarted)
+			gameText = new Text("Press 'space' to start...", font, 32, { 100, 255, 100 }, renderer, gameW);
+		scoreText = new Text("Score: " + std::to_string(player->score), font, 32, { 255, 255, 255 }, renderer, WIDTH);
+		healthText = new Text("Health: " + std::to_string(player->health), font, 32, { 255, 255, 255 }, renderer, WIDTH);
+		baseText = new Text("Base Health: " + std::to_string(player->baseHealth), font, 32, { 255, 255, 255 }, renderer, WIDTH);
 	}
 
 	//If the player or the base health is 0 or below, game over
@@ -257,10 +268,28 @@ void Game::Render()
 
 void Game::Clean()
 {
-	isRunning = false;
+	EnemySpawner().Clean();
+	Shooting().Clean();
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
 	TTF_Quit();
+	//Delete();
 	std::cout << "Game Cleaned!" << std::endl;
+}
+
+void Game::Delete()
+{
+	//Objects
+	delete player;
+	delete background;
+
+	//Text
+	delete gameText;
+	delete scoreText;
+	delete healthText;
+	delete baseText;
+
+	//Other
+
 }

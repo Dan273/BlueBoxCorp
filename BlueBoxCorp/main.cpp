@@ -15,6 +15,7 @@ int Initial::StartGame()
 	if (game != nullptr)
 	{
 		game->Clean();
+		delete game;
 	}
 
 	const int FPS = 60;

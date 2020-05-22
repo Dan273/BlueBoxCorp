@@ -13,7 +13,7 @@ class Shooting
 public:
 	//We will have a predefined list of projectiles so that they can be easily set in game
 	Projectile* projectileTypes[2] = {
-			new Projectile("Assets/Sprites/Laser.png", 2, 100, new Vector2(4, 8), NULL), 
+			new Projectile("Assets/Sprites/Laser.png", 5, 100, new Vector2(4, 8), NULL), 
 			new Projectile("Assets/Sprites/Laser/Rocket.png", 5, 100, new Vector2(8, 16), NULL)
 
 	};
@@ -22,6 +22,7 @@ public:
 	void Shoot(Projectile* p, int c, SDL_Renderer* ren, Vector2* pos);
 	void Update(int w, int h);
 	void Render();
+	void Clean();
 
 private:
 

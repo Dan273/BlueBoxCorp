@@ -1,3 +1,2 @@
-﻿  Game.cpp
-C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Game.cpp(67,114): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+﻿  Text.cpp
   BlueBoxCorp.vcxproj -> C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\Debug\BlueBoxCorp.exe

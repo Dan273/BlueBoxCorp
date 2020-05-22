@@ -1,14 +1,17 @@
 #include "Text.h"
 #include "Game.h"
 
-Text::Text(const std::string &t, const char* fontName, int fontSize, SDL_Color c, SDL_Renderer* ren)
+Text::Text(const std::string &t, const char* fontName, int fontSize, SDL_Color c, SDL_Renderer* ren, int w)
 {
-	texture = LoadFont(t, fontName, fontSize, c, ren);
+	texture = LoadFont(t, fontName, fontSize, c, ren, w);
 
 	SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 }
 
-SDL_Texture* Text::LoadFont(const std::string &t, const char* fontName, int fontSize, SDL_Color c, SDL_Renderer* ren)
+Text::~Text()
+{}
+
+SDL_Texture* Text::LoadFont(const std::string &t, const char* fontName, int fontSize, SDL_Color c, SDL_Renderer* ren, int w)
 {
 	//Set the font of the text
 	TTF_Font* newFont = TTF_OpenFont(fontName, fontSize);
@@ -16,7 +19,7 @@ SDL_Texture* Text::LoadFont(const std::string &t, const char* fontName, int font
 		std::cout << "Failed to load font!" << std::endl;
 
 	//Set the surface for the text
-	SDL_Surface* textSurface = TTF_RenderText_Solid(newFont, t.c_str(), c);
+	SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped(newFont, t.c_str(), c, w);
 	if (!textSurface)
 		std::cout << "Failed to load surface!" << std::endl;
 
@@ -37,4 +40,7 @@ void Text::Render(int x, int y, SDL_Renderer* ren) const
 	rect.y = y;
 
 	SDL_RenderCopy(ren, texture, NULL, &rect);
+
+	//Because all text will be updated on every frame, we need to destroy the old texture every frame to prevent memeory loss
+	SDL_DestroyTexture(texture);
 }
