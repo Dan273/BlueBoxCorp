@@ -61,7 +61,7 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer)
 		{
-			//Currently: White
+			//Currently: Grey/Blue
 			SDL_SetRenderDrawColor(renderer, 0, 0, 25, 255);
 			std::cout << "Renderer Created!" << std::endl;
 		}
@@ -72,7 +72,7 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 
 	//Spawn Player
 	Transform* playerTransform = new Transform("Assets/Sprites/Player.png", renderer, new Vector2(width / 2, height / 1.5f), new Vector2(64, 128));
-	player = new PlayerManager(playerTransform, 250, 100, 0, 0, 0);
+	player = new PlayerManager(playerTransform, 100, 100, 0, 0, 0);
 
 	//Spawn Background
 	background = new Transform("Assets/Background.png", renderer, new Vector2(0, 0), new Vector2(width, height));
@@ -81,12 +81,11 @@ void Game::init(const char* title, int xPos, int yPos, int width, int height, bo
 
 int xVel = 0;
 int yVel = 0;
-bool canJump = false;
 void Game::HandleEvents()
 {
 	//Handle the player movement
-	int speed = 4;
-	int maxSpeed = 4;
+	int speed = 5;
+	int maxSpeed = 5;
 
 	SDL_Event event;
 	SDL_PollEvent(&event);
@@ -105,19 +104,19 @@ void Game::HandleEvents()
 			//Check the SDLKey values and move change the coords
 			switch (event.key.keysym.sym) {
 			case SDLK_LEFT:
-				if (xVel >= -maxSpeed)
+				if (xVel > -maxSpeed)
 					xVel -= speed;
 				break;
 			case SDLK_RIGHT:
-				if (xVel <= maxSpeed)
+				if (xVel < maxSpeed)
 					xVel += speed;
 				break;
 			case SDLK_UP:
-				if (yVel >= -maxSpeed)
+				if (yVel > -maxSpeed)
 					yVel -= speed;
 				break;
 			case SDLK_DOWN:
-				if (yVel <= maxSpeed)
+				if (yVel < maxSpeed)
 					yVel += speed;
 				break;
 			default:
@@ -164,7 +163,7 @@ void Game::HandleEvents()
 					new Vector2(player->transform->position->x + player->transform->scale->x / 2 -
 						Shooting().projectileTypes[0]->scale->x / 2,
 						player->transform->position->y));
-				delay = 40;
+				delay = 35;
 			}
 		}
 
@@ -181,6 +180,7 @@ void Game::HandleEvents()
 		}
 		else
 		{
+			//Player will move down by itself
 			if(!keystates[SDL_SCANCODE_UP])
 				player->transform->position->y += 1;
 		}
@@ -231,6 +231,7 @@ void Game::Update()
 		//UI Elements
 		if (!gameStarted)
 			gameText = new Text("Press 'space' to start...", font, 32, { 100, 255, 100 }, renderer, gameW);
+		
 		scoreText = new Text("Score: " + std::to_string(player->score), font, 32, { 255, 255, 255 }, renderer, WIDTH);
 		healthText = new Text("Health: " + std::to_string(player->health), font, 32, { 255, 255, 255 }, renderer, WIDTH);
 		baseText = new Text("Base Health: " + std::to_string(player->baseHealth), font, 32, { 255, 255, 255 }, renderer, WIDTH);

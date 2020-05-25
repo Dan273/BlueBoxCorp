@@ -4,7 +4,9 @@
 
 int enemyCount = 0;
 std::vector<Enemy*> enemies;
-int spawnTimer = 500;
+float spawnTimer = 500;
+int minSpawnTime = 80;
+int spawnChange = 0;
 
 void EnemySpawner::SpawnEnemy(Enemy* enemy, Vector2* pos, SDL_Renderer* ren)
 {
@@ -29,7 +31,15 @@ void EnemySpawner::SpawnEnemies(SDL_Renderer* ren, int width)
 	if (--spawnTimer <= 0)
 	{
 		SpawnEnemy(enemyTypes[0], new Vector2(rand() % (width - enemyTypes[0]->scale->x) + 0, -100), ren);
-		spawnTimer = 60 + (rand() % 120);
+		spawnTimer = minSpawnTime + (rand() % minSpawnTime*2);
+		
+		spawnChange++;
+		//Once a certain amount of enemies spawn, the spawn time will go down, increasing difficulty
+		if (minSpawnTime > 30 &&  spawnChange >= 10)
+		{
+			minSpawnTime -= 10;
+			spawnChange = 0;
+		}
 	}
 }
 

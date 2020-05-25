@@ -1,2 +1,14 @@
-﻿  Text.cpp
+﻿  Collider.cpp
+  Enemy.cpp
+  EnemySpawner.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\EnemySpawner.cpp(34,29): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Game.cpp
+C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\BlueBoxCorp\Game.cpp(74,114): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  main.cpp
+  PlayerManager.cpp
+  Projectile.cpp
+  Shooting.cpp
+  Text.cpp
+  Transform.cpp
+  Generating Code...
   BlueBoxCorp.vcxproj -> C:\Users\Daniel\Documents\GitHub\BlueBoxCorp\Debug\BlueBoxCorp.exe

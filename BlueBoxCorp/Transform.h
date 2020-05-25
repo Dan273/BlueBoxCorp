@@ -18,7 +18,6 @@ public:
 	void Destroy();
 
 private:
-	SDL_Renderer* ren;
 	SDL_Texture* objTexture;
 	SDL_Rect srcRect, destRect;
 	SDL_Renderer* renderer;

@@ -35,7 +35,7 @@ public:
 	bool Running() { return isRunning; }
 
 private:
-	int cnt = 0 ;
+	int cnt = 0;
 	bool isRunning;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
